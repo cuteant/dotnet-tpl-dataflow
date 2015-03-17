@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ProjectGuid>{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AssemblyName>System.Threading.Tasks.Dataflow</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RootNamespace>System.Threading.Tasks.Dataflow</RootNamespace>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>6127975e</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <IntermediateOutputPath>obj\Debug\Net40</IntermediateOutputPath>
+    <OutputPath>..\Deploy\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET_4_0;NET_3_5_ABOVE;NET_4_5_BELOW;NONATIVETASKS;NET40PLUS;NET35PLUS;CONCURRENT_COLLECTIONS;PRENET45</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>..\Deploy\Debug\System.Threading.Tasks.Dataflow.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <IntermediateOutputPath>obj\Release\Net40</IntermediateOutputPath>
+    <OutputPath>..\Deploy\Net40\</OutputPath>
+    <DefineConstants>TRACE;NET_4_0;NET_3_5_ABOVE;NET_4_5_BELOW;NONATIVETASKS;NET40PLUS;NET35PLUS;CONCURRENT_COLLECTIONS;PRENET45</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\Deploy\Net40\System.Threading.Tasks.Dataflow.XML</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\StrongKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.IO">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\source\Base\DataflowBlock.cs">
+      <Link>Base\DataflowBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Base\DataflowBlockOptions.cs">
+      <Link>Base\DataflowBlockOptions.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Base\DataflowLinkOptions.cs">
+      <Link>Base\DataflowLinkOptions.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Base\DataflowMessageHeader.cs">
+      <Link>Base\DataflowMessageHeader.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Base\DataflowMessageStatus.cs">
+      <Link>Base\DataflowMessageStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Base\IDataflowBlock.cs">
+      <Link>Base\IDataflowBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Base\IPropagatorBlock.cs">
+      <Link>Base\IPropagatorBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Base\IReceivableSourceBlock.cs">
+      <Link>Base\IReceivableSourceBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Base\ISourceBlock.cs">
+      <Link>Base\ISourceBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Base\ITargetBlock.cs">
+      <Link>Base\ITargetBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Blocks\ActionBlock.cs">
+      <Link>Blocks\ActionBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Blocks\BatchBlock.cs">
+      <Link>Blocks\BatchBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Blocks\BatchedJoinBlock.cs">
+      <Link>Blocks\BatchedJoinBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Blocks\BroadcastBlock.cs">
+      <Link>Blocks\BroadcastBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Blocks\BufferBlock.cs">
+      <Link>Blocks\BufferBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Blocks\JoinBlock.cs">
+      <Link>Blocks\JoinBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Blocks\TransformBlock.cs">
+      <Link>Blocks\TransformBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Blocks\TransformManyBlock.cs">
+      <Link>Blocks\TransformManyBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Blocks\WriteOnceBlock.cs">
+      <Link>Blocks\WriteOnceBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Internal\ActionOnDispose.cs">
+      <Link>Internal\ActionOnDispose.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Internal\AsyncEnlightenment.cs">
+      <Link>Internal\AsyncEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Internal\Common.cs">
+      <Link>Internal\Common.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Internal\ConcurrentQueue.cs">
+      <Link>Internal\ConcurrentQueue.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Internal\DataflowEtwProvider.cs">
+      <Link>Internal\DataflowEtwProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Internal\EnumerableDebugView.cs">
+      <Link>Internal\EnumerableDebugView.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Internal\IDebuggerDisplay.cs">
+      <Link>Internal\IDebuggerDisplay.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Internal\ImmutableList.cs">
+      <Link>Internal\ImmutableList.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Internal\IProducerConsumerCollection.cs">
+      <Link>Internal\IProducerConsumerCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Internal\Padding.cs">
+      <Link>Internal\Padding.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Internal\ProducerConsumerQueues.cs">
+      <Link>Internal\ProducerConsumerQueues.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Internal\QueuedMap.cs">
+      <Link>Internal\QueuedMap.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Internal\ReorderingBuffer.cs">
+      <Link>Internal\ReorderingBuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Internal\SourceCore.cs">
+      <Link>Internal\SourceCore.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Internal\SpscTargetCore.cs">
+      <Link>Internal\SpscTargetCore.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Internal\TargetCore.cs">
+      <Link>Internal\TargetCore.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Internal\TargetRegistry.cs">
+      <Link>Internal\TargetRegistry.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Internal\Threading.cs">
+      <Link>Internal\Threading.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Resources\SR.cs">
+      <Link>Resources\SR.cs</Link>
+    </Compile>
+    <Compile Include="..\source\Resources\Strings.Designer.cs">
+      <Link>Resources\Strings.Designer.cs</Link>
+    </Compile>
+    <Compile Include="Internal\TaskShim.cs" />
+    <Compile Include="System\Threading\Tasks\ConcurrentExclusiveSchedulerPair.cs" />
+    <Compile Include="System\Threading\Volatile.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="..\source\Resources\Strings.resx">
+      <Link>Resources\Strings.resx</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。启用“NuGet 程序包还原”可下载这些程序包。有关详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

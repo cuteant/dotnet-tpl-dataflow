@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D9FE9D2E-7CCF-4C81-933F-BC809CEB08FD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Threading.Tasks.Dataflow.Tests</RootNamespace>
+    <AssemblyName>tdf.test</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>eadbabb8</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\deploy\test40\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET_4_0;NET_3_5_ABOVE;NET_4_5_BELOW;NET40PLUS;NET35PLUS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\deploy\test40\</OutputPath>
+    <DefineConstants>TRACE;NET_4_0;NET_3_5_ABOVE;NET_4_5_BELOW;NET40PLUS;NET35PLUS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\StrongKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="System.XML" />
+    <Reference Include="xunit.abstractions">
+      <HintPath>..\xunit.net\net40\xunit.abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+    <Reference Include="xunit.assert">
+      <HintPath>..\xunit.net\net40\xunit.assert.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.core">
+      <HintPath>..\xunit.net\net40\xunit.core.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.execution.desktop">
+      <HintPath>..\xunit.net\net40\xunit.execution.desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.extensions">
+      <HintPath>..\xunit.net\net40\xunit.extensions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\test\ActionBlockTests.cs">
+      <Link>ActionBlockTests.cs</Link>
+    </Compile>
+    <Compile Include="..\test\BatchBlockTests.cs">
+      <Link>BatchBlockTests.cs</Link>
+    </Compile>
+    <Compile Include="..\test\BatchedJoinBlockTests.cs">
+      <Link>BatchedJoinBlockTests.cs</Link>
+    </Compile>
+    <Compile Include="..\test\BroadcastBlockTests.cs">
+      <Link>BroadcastBlockTests.cs</Link>
+    </Compile>
+    <Compile Include="..\test\BufferBlockTests.cs">
+      <Link>BufferBlockTests.cs</Link>
+    </Compile>
+    <Compile Include="..\test\ConcurrentTests.cs">
+      <Link>ConcurrentTests.cs</Link>
+    </Compile>
+    <Compile Include="..\test\DataflowBlockExtensionTests.cs">
+      <Link>DataflowBlockExtensionTests.cs</Link>
+    </Compile>
+    <Compile Include="..\test\DataflowBlockOptionsTests.cs">
+      <Link>DataflowBlockOptionsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\test\DataflowTestHelper.cs">
+      <Link>DataflowTestHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\test\DebugAttributeTests.cs">
+      <Link>DebugAttributeTests.cs</Link>
+    </Compile>
+    <Compile Include="..\test\DelegateBasedMocks.cs">
+      <Link>DelegateBasedMocks.cs</Link>
+    </Compile>
+    <Compile Include="..\test\EtwTests.cs">
+      <Link>EtwTests.cs</Link>
+    </Compile>
+    <Compile Include="..\test\JoinBlockTests.cs">
+      <Link>JoinBlockTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Test\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\test\SimpleNetworkTests.cs">
+      <Link>SimpleNetworkTests.cs</Link>
+    </Compile>
+    <Compile Include="..\test\TestEventListener.cs">
+      <Link>TestEventListener.cs</Link>
+    </Compile>
+    <Compile Include="..\test\TransformBlockTests.cs">
+      <Link>TransformBlockTests.cs</Link>
+    </Compile>
+    <Compile Include="..\test\TransformManyBlockTests.cs">
+      <Link>TransformManyBlockTests.cs</Link>
+    </Compile>
+    <Compile Include="..\test\WriteOnceBlockTests.cs">
+      <Link>WriteOnceBlockTests.cs</Link>
+    </Compile>
+    <Compile Include="..\test\XunitAssemblyAttributes.cs">
+      <Link>XunitAssemblyAttributes.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\source.net40\tdf.net40.csproj">
+      <Project>{7ab36ccf-5ffd-4780-a54e-a102eca028b5}</Project>
+      <Name>tdf.net40</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。启用“NuGet 程序包还原”可下载这些程序包。有关详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+    <Error Condition="!Exists('..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props'))" />
+  </Target>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
