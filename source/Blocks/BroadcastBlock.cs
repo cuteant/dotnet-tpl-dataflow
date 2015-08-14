@@ -117,13 +117,13 @@ namespace System.Threading.Tasks.Dataflow
 #endif
 		}
 
-		/// <include file='..\XmlDocs\CommonXmlDocComments.xml' path='CommonXmlDocComments/Blocks/Member[@name="Complete"]/*' />
+		/// <include file='..\XmlDocs/CommonXmlDocComments.xml' path='CommonXmlDocComments/Blocks/Member[@name="Complete"]/*' />
 		public void Complete()
 		{
 			CompleteCore(exception: null, storeExceptionEvenIfAlreadyCompleting: false);
 		}
 
-		/// <include file='..\XmlDocs\CommonXmlDocComments.xml' path='CommonXmlDocComments/Blocks/Member[@name="Fault"]/*' />
+		/// <include file='..\XmlDocs/CommonXmlDocComments.xml' path='CommonXmlDocComments/Blocks/Member[@name="Fault"]/*' />
 		void IDataflowBlock.Fault(Exception exception)
 		{
 			if (exception == null) throw new ArgumentNullException("exception");
@@ -161,19 +161,19 @@ namespace System.Threading.Tasks.Dataflow
 			}
 		}
 
-		/// <include file='..\XmlDocs\CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="LinkTo"]/*' />
+		/// <include file='..\XmlDocs/CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="LinkTo"]/*' />
 		public IDisposable LinkTo(ITargetBlock<T> target, DataflowLinkOptions linkOptions) { return _source.LinkTo(target, linkOptions); }
 
-		/// <include file='..\XmlDocs\CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="TryReceive"]/*' />
+		/// <include file='..\XmlDocs/CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="TryReceive"]/*' />
 		public Boolean TryReceive(Predicate<T> filter, out T item) { return _source.TryReceive(filter, out item); }
 
-		/// <include file='..\XmlDocs\CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="TryReceiveAll"]/*' />
+		/// <include file='..\XmlDocs/CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="TryReceiveAll"]/*' />
 		Boolean IReceivableSourceBlock<T>.TryReceiveAll(out IList<T> items) { return _source.TryReceiveAll(out items); }
 
-		/// <include file='..\XmlDocs\CommonXmlDocComments.xml' path='CommonXmlDocComments/Blocks/Member[@name="Completion"]/*' />
+		/// <include file='..\XmlDocs/CommonXmlDocComments.xml' path='CommonXmlDocComments/Blocks/Member[@name="Completion"]/*' />
 		public Task Completion { get { return _source.Completion; } }
 
-		/// <include file='..\XmlDocs\CommonXmlDocComments.xml' path='CommonXmlDocComments/Targets/Member[@name="OfferMessage"]/*' />
+		/// <include file='..\XmlDocs/CommonXmlDocComments.xml' path='CommonXmlDocComments/Targets/Member[@name="OfferMessage"]/*' />
 		DataflowMessageStatus ITargetBlock<T>.OfferMessage(DataflowMessageHeader messageHeader, T messageValue, ISourceBlock<T> source, Boolean consumeToAccept)
 		{
 			// Validate arguments
@@ -432,19 +432,19 @@ namespace System.Threading.Tasks.Dataflow
 			}
 		}
 
-		/// <include file='..\XmlDocs\CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="ConsumeMessage"]/*' />
+		/// <include file='..\XmlDocs/CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="ConsumeMessage"]/*' />
 		T ISourceBlock<T>.ConsumeMessage(DataflowMessageHeader messageHeader, ITargetBlock<T> target, out Boolean messageConsumed)
 		{
 			return _source.ConsumeMessage(messageHeader, target, out messageConsumed);
 		}
 
-		/// <include file='..\XmlDocs\CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="ReserveMessage"]/*' />
+		/// <include file='..\XmlDocs/CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="ReserveMessage"]/*' />
 		bool ISourceBlock<T>.ReserveMessage(DataflowMessageHeader messageHeader, ITargetBlock<T> target)
 		{
 			return _source.ReserveMessage(messageHeader, target);
 		}
 
-		/// <include file='..\XmlDocs\CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="ReleaseReservation"]/*' />
+		/// <include file='..\XmlDocs/CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="ReleaseReservation"]/*' />
 		void ISourceBlock<T>.ReleaseReservation(DataflowMessageHeader messageHeader, ITargetBlock<T> target)
 		{
 			_source.ReleaseReservation(messageHeader, target);
@@ -455,7 +455,7 @@ namespace System.Threading.Tasks.Dataflow
 		/// <summary>Gets a value to be used for the DebuggerDisplayAttribute.  This must not throw even if HasValue is false.</summary>
 		private T ValueForDebugger { get { return _source.GetDebuggingInformation().Value; } }
 
-		/// <include file='..\XmlDocs\CommonXmlDocComments.xml' path='CommonXmlDocComments/Blocks/Member[@name="ToString"]/*' />
+		/// <include file='..\XmlDocs/CommonXmlDocComments.xml' path='CommonXmlDocComments/Blocks/Member[@name="ToString"]/*' />
 		public override string ToString() { return Common.GetNameForDebugger(this, _source.DataflowBlockOptions); }
 
 		/// <summary>The data to display in the debugger display attribute.</summary>
@@ -588,7 +588,7 @@ namespace System.Threading.Tasks.Dataflow
 				_targetRegistry = new TargetRegistry<TOutput>(_owningSource);
 			}
 
-			/// <include file='..\XmlDocs\CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="TryReceive"]/*' />
+			/// <include file='..\XmlDocs/CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="TryReceive"]/*' />
 			internal Boolean TryReceive(Predicate<TOutput> filter, out TOutput item)
 			{
 				// Take the lock only long enough to get the message,
@@ -620,7 +620,7 @@ namespace System.Threading.Tasks.Dataflow
 				}
 			}
 
-			/// <include file='..\XmlDocs\CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="TryReceiveAll"]/*' />
+			/// <include file='..\XmlDocs/CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="TryReceiveAll"]/*' />
 			internal Boolean TryReceiveAll(out IList<TOutput> items)
 			{
 				// Try to receive the one item this block may have.
@@ -1035,7 +1035,7 @@ namespace System.Threading.Tasks.Dataflow
 #endif
 			}
 
-			/// <include file='..\XmlDocs\CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="LinkTo"]/*' />
+			/// <include file='..\XmlDocs/CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="LinkTo"]/*' />
 			[SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
 			internal IDisposable LinkTo(ITargetBlock<TOutput> target, DataflowLinkOptions linkOptions)
 			{
@@ -1067,7 +1067,7 @@ namespace System.Threading.Tasks.Dataflow
 				}
 			}
 
-			/// <include file='..\XmlDocs\CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="ConsumeMessage"]/*' />
+			/// <include file='..\XmlDocs/CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="ConsumeMessage"]/*' />
 			internal TOutput ConsumeMessage(DataflowMessageHeader messageHeader, ITargetBlock<TOutput> target, out Boolean messageConsumed)
 			{
 				// Validate arguments
@@ -1108,7 +1108,7 @@ namespace System.Threading.Tasks.Dataflow
 				return CloneItem(valueToClone);
 			}
 
-			/// <include file='..\XmlDocs\CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="ReserveMessage"]/*' />
+			/// <include file='..\XmlDocs/CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="ReserveMessage"]/*' />
 			internal Boolean ReserveMessage(DataflowMessageHeader messageHeader, ITargetBlock<TOutput> target)
 			{
 				// Validate arguments
@@ -1136,7 +1136,7 @@ namespace System.Threading.Tasks.Dataflow
 				return false;
 			}
 
-			/// <include file='..\XmlDocs\CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="ReleaseReservation"]/*' />
+			/// <include file='..\XmlDocs/CommonXmlDocComments.xml' path='CommonXmlDocComments/Sources/Member[@name="ReleaseReservation"]/*' />
 			internal void ReleaseReservation(DataflowMessageHeader messageHeader, ITargetBlock<TOutput> target)
 			{
 				// Validate arguments
@@ -1212,7 +1212,7 @@ namespace System.Threading.Tasks.Dataflow
 				}
 			}
 
-			/// <include file='..\XmlDocs\CommonXmlDocComments.xml' path='CommonXmlDocComments/Blocks/Member[@name="Completion"]/*' />
+			/// <include file='..\XmlDocs/CommonXmlDocComments.xml' path='CommonXmlDocComments/Blocks/Member[@name="Completion"]/*' />
 			internal Task Completion { get { return _completionTask.Task; } }
 
 			/// <summary>Gets the DataflowBlockOptions used to configure this block.</summary>

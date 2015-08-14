@@ -1,16 +1,126 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+#if NET45PLUS
+using System.Diagnostics;
+#else
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+#endif
 using Xunit;
 
 namespace System.Threading.Tasks.Dataflow.Tests
 {
 	public class DebugAttributeTests
 	{
+#if NET45PLUS
+		[Fact]
+		public void TestDebuggerDisplaysAndTypeProxies()
+		{
+			// Test both canceled and non-canceled
+			foreach (var ct in new[] { new CancellationToken(false), new CancellationToken(true) })
+			{
+				// Some blocks have different code paths for whether they're greedy or not.
+				// This helps with code-coverage.
+				var dboBuffering = new DataflowBlockOptions();
+				var dboNoBuffering = new DataflowBlockOptions() { BoundedCapacity = 1 };
+				var dboExBuffering = new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = 2, CancellationToken = ct };
+				var dboExSpsc = new ExecutionDataflowBlockOptions { SingleProducerConstrained = true };
+				var dboExNoBuffering = new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = 2, BoundedCapacity = 1, CancellationToken = ct };
+				var dboGroupGreedy = new GroupingDataflowBlockOptions();
+				var dboGroupNonGreedy = new GroupingDataflowBlockOptions { Greedy = false };
+
+				// Item1 == test Debuggerdisplay, Item2 == test DebuggerTypeProxy, Item3 == object
+				var objectsToTest = new Tuple<bool, bool, object>[]
+								{
+										// Primary Blocks
+										Tuple.Create<bool,bool,object>(true, true, new ActionBlock<int>(i => {})),
+										Tuple.Create<bool,bool,object>(true, true, new ActionBlock<int>(i => {}, dboExBuffering)),
+										Tuple.Create<bool,bool,object>(true, true, new ActionBlock<int>(i => {}, dboExSpsc)),
+										Tuple.Create<bool,bool,object>(true, true, SendAsyncMessages(new ActionBlock<int>(i => {}, dboExNoBuffering), 2)),
+										Tuple.Create<bool,bool,object>(true, true, new TransformBlock<int,int>(i => i)),
+										Tuple.Create<bool,bool,object>(true, true, new TransformBlock<int,int>(i => i, dboExBuffering)),
+										Tuple.Create<bool,bool,object>(true, true, SendAsyncMessages(new TransformBlock<int,int>(i => i, dboExNoBuffering),2)),
+										Tuple.Create<bool,bool,object>(true, true, new TransformManyBlock<int,int>(i => new [] { i })),
+										Tuple.Create<bool,bool,object>(true, true, new TransformManyBlock<int,int>(i => new [] { i }, dboExBuffering)),
+										Tuple.Create<bool,bool,object>(true, true, SendAsyncMessages(new TransformManyBlock<int,int>(i => new [] { i }, dboExNoBuffering),2)),
+										Tuple.Create<bool,bool,object>(true, true, new BufferBlock<int>()),
+										Tuple.Create<bool,bool,object>(true, true, new BufferBlock<int>(new DataflowBlockOptions() { NameFormat = "none" })),
+										Tuple.Create<bool,bool,object>(true, true, new BufferBlock<int>(new DataflowBlockOptions() { NameFormat = "foo={0}, bar={1}" })),
+										Tuple.Create<bool,bool,object>(true, true, new BufferBlock<int>(new DataflowBlockOptions() { NameFormat = "foo={0}, bar={1}, kaboom={2}" })),
+										Tuple.Create<bool,bool,object>(true, true, new BufferBlock<int>(dboBuffering)),
+										Tuple.Create<bool,bool,object>(true, true, SendAsyncMessages(new BufferBlock<int>(new DataflowBlockOptions { BoundedCapacity = 10 }), 20)),
+										Tuple.Create<bool,bool,object>(true, true, new BroadcastBlock<int>(i => i)),
+										Tuple.Create<bool,bool,object>(true, true, new BroadcastBlock<int>(i => i, dboBuffering)),
+										Tuple.Create<bool,bool,object>(true, true, SendAsyncMessages(new BroadcastBlock<int>(i => i, dboNoBuffering), 20)),
+										Tuple.Create<bool,bool,object>(true, true, new WriteOnceBlock<int>(i => i)),
+										Tuple.Create<bool,bool,object>(true, true, SendAsyncMessages(new WriteOnceBlock<int>(i => i), 1)),
+										Tuple.Create<bool,bool,object>(true, true, new WriteOnceBlock<int>(i => i, dboBuffering)),
+										Tuple.Create<bool,bool,object>(true, true, new JoinBlock<int,int>()),
+										Tuple.Create<bool,bool,object>(true, true, new JoinBlock<int,int>(dboGroupGreedy)),
+										Tuple.Create<bool,bool,object>(true, true, new JoinBlock<int,int>(dboGroupNonGreedy)),
+										Tuple.Create<bool,bool,object>(true, true, new JoinBlock<int,int,int>()),
+										Tuple.Create<bool,bool,object>(true, true, new JoinBlock<int,int,int>(dboGroupGreedy)),
+										Tuple.Create<bool,bool,object>(true, true, new JoinBlock<int,int,int>(dboGroupNonGreedy)),
+										Tuple.Create<bool,bool,object>(true, true, new BatchedJoinBlock<int,int>(42)),
+										Tuple.Create<bool,bool,object>(true, true, new BatchedJoinBlock<int,int>(42, dboGroupGreedy)),
+										Tuple.Create<bool,bool,object>(true, true, new BatchedJoinBlock<int,int,int>(42, dboGroupGreedy)),
+										Tuple.Create<bool,bool,object>(true, true, new BatchBlock<int>(42)),
+										Tuple.Create<bool,bool,object>(true, true, new BatchBlock<int>(42, dboGroupGreedy)),
+										Tuple.Create<bool,bool,object>(true, true, new BatchBlock<int>(42, dboGroupNonGreedy)),
+										Tuple.Create<bool,bool,object>(true, true, DataflowBlock.Encapsulate<int,int>(new BufferBlock<int>(),new BufferBlock<int>())),
+										Tuple.Create<bool,bool,object>(true, true, new BufferBlock<int>().AsObservable()),
+
+										// Supporting and Internal Types
+										Tuple.Create<bool,bool,object>(true, false, DebuggerAttributes.GetFieldValue(new ActionBlock<int>(i => {}, dboExBuffering), "_defaultTarget")),
+										Tuple.Create<bool,bool,object>(true, false, DebuggerAttributes.GetFieldValue(new ActionBlock<int>(i => {}, dboExNoBuffering), "_defaultTarget")),
+										Tuple.Create<bool,bool,object>(true, false, DebuggerAttributes.GetFieldValue(DebuggerAttributes.GetFieldValue(new ActionBlock<int>(i => {}), "_defaultTarget"), "_messages")),
+										Tuple.Create<bool,bool,object>(true, false, DebuggerAttributes.GetFieldValue(new ActionBlock<int>(i => {}, dboExSpsc), "_spscTarget")),
+										Tuple.Create<bool,bool,object>(true, false, DebuggerAttributes.GetFieldValue(DebuggerAttributes.GetFieldValue(new ActionBlock<int>(i => {}, dboExSpsc), "_spscTarget"), "_messages")),
+										Tuple.Create<bool,bool,object>(true, false, DebuggerAttributes.GetFieldValue(new BufferBlock<int>(), "_source")),
+										Tuple.Create<bool,bool,object>(true, false, DebuggerAttributes.GetFieldValue(new BufferBlock<int>(new DataflowBlockOptions { BoundedCapacity = 10 }), "_source")),
+										Tuple.Create<bool,bool,object>(true, false, DebuggerAttributes.GetFieldValue(new TransformBlock<int,int>(i => i, dboExBuffering), "_source")),
+										Tuple.Create<bool,bool,object>(true, true, DebuggerAttributes.GetFieldValue(new TransformBlock<int,int>(i => i, dboExNoBuffering), "_reorderingBuffer")),
+										Tuple.Create<bool,bool,object>(true, true, DebuggerAttributes.GetFieldValue(DebuggerAttributes.GetFieldValue(new TransformBlock<int,int>(i => i, dboExBuffering), "_source"), "_targetRegistry")),
+										Tuple.Create<bool,bool,object>(true, true, DebuggerAttributes.GetFieldValue(DebuggerAttributes.GetFieldValue(WithLinkedTarget<TransformBlock<int,int>,int>(new TransformBlock<int,int>(i => i, dboExNoBuffering)), "_source"), "_targetRegistry")),
+										Tuple.Create<bool,bool,object>(true, true, new JoinBlock<int,int>().Target1),
+										Tuple.Create<bool,bool,object>(true, true, new JoinBlock<int,int>(dboGroupGreedy).Target1),
+										Tuple.Create<bool,bool,object>(true, true, new JoinBlock<int,int>(dboGroupNonGreedy).Target1),
+										Tuple.Create<bool,bool,object>(true, false, DebuggerAttributes.GetFieldValue(new JoinBlock<int,int>().Target1, "_sharedResources")),
+										Tuple.Create<bool,bool,object>(true, true, new BatchedJoinBlock<int,int>(42).Target1),
+										Tuple.Create<bool,bool,object>(true, true, new BatchedJoinBlock<int,int>(42, dboGroupGreedy).Target1),
+										Tuple.Create<bool,bool,object>(true, false, DebuggerAttributes.GetFieldValue(new BatchBlock<int>(42), "_target")),
+										Tuple.Create<bool,bool,object>(true, false, DebuggerAttributes.GetFieldValue(new BatchBlock<int>(42, dboGroupGreedy), "_target")),
+										Tuple.Create<bool,bool,object>(true, false, DebuggerAttributes.GetFieldValue(new BatchBlock<int>(42, dboGroupNonGreedy), "_target")),
+										Tuple.Create<bool,bool,object>(true, false, new BufferBlock<int>().LinkTo(new ActionBlock<int>(i => {}))), // ActionOnDispose
+										Tuple.Create<bool,bool,object>(true, false, DebuggerAttributes.GetFieldValue(new BroadcastBlock<int>(i => i), "_source")),
+										Tuple.Create<bool,bool,object>(true, false, DebuggerAttributes.GetFieldValue(new BroadcastBlock<int>(i => i, dboGroupGreedy), "_source")),
+										Tuple.Create<bool,bool,object>(true, false, DebuggerAttributes.GetFieldValue(new BroadcastBlock<int>(i => i, dboGroupNonGreedy), "_source")),
+										Tuple.Create<bool,bool,object>(true, true, CreateNopLinkSource<int>()),
+										Tuple.Create<bool,bool,object>(true, true, CreateFilteringSource<int>()),
+										Tuple.Create<bool,bool,object>(true, true, CreateSendSource<int>()),
+										Tuple.Create<bool,bool,object>(true, false, CreateReceiveTarget<int>()),
+										Tuple.Create<bool,bool,object>(true, false, CreateOutputAvailableTarget()),
+										Tuple.Create<bool,bool,object>(true, false, CreateChooseTarget<int>()),
+										Tuple.Create<bool,bool,object>(true, false, new BufferBlock<int>().AsObservable().Subscribe(DataflowBlock.NullTarget<int>().AsObserver())),
+
+										// Other
+										Tuple.Create<bool,bool,object>(true, false, new DataflowMessageHeader(1)),
+								};
+
+				// Test all DDAs and DTPAs
+				foreach (var obj in objectsToTest)
+				{
+					if (obj.Item1)
+						DebuggerAttributes.ValidateDebuggerDisplayReferences(obj.Item3);
+					if (obj.Item2)
+						DebuggerAttributes.ValidateDebuggerTypeProxyProperties(obj.Item3);
+				}
+			}
+		}
+#else
 		[Fact]
 		public void TestDebuggerDisplaysAndTypeProxies()
 		{
@@ -110,6 +220,7 @@ namespace System.Threading.Tasks.Dataflow.Tests
 				Assert.All(from obj in objectsToTest where obj.Item2 select obj.Item3, obj => TestDebuggerTypeProxyProperties(obj));
 			}
 		}
+#endif
 
 		private static object SendAsyncMessages<T>(ITargetBlock<T> target, int numMessages)
 		{
@@ -123,6 +234,7 @@ namespace System.Threading.Tasks.Dataflow.Tests
 			return block;
 		}
 
+#if !NET45PLUS
 		private static object GetFieldValue(object obj, string fieldName)
 		{
 			Type t = obj.GetType();
@@ -203,6 +315,7 @@ namespace System.Threading.Tasks.Dataflow.Tests
 				object result = pi != null ? pi.GetValue(obj, null) : fi.GetValue(obj); // make sure we can access the property or field
 			}
 		}
+#endif
 
 		private static ISourceBlock<T> CreateNopLinkSource<T>()
 		{
